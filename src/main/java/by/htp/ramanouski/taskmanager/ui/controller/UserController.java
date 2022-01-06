@@ -1,10 +1,11 @@
 package by.htp.ramanouski.taskmanager.ui.controller;
 
 
+import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
 import by.htp.ramanouski.taskmanager.dto.UserDto;
 import by.htp.ramanouski.taskmanager.service.UserService;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserDetailsRequestModel;
-import by.htp.ramanouski.taskmanager.ui.model.response.UserRestResponse;
+import by.htp.ramanouski.taskmanager.ui.model.response.user.UserRestResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ public class UserController {
 
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userDetails,userDto);
+
+        userDto.setOrganization(
+                OrganizationDto.builder()
+                .organizationName(userDetails.getOrganization())
+                .build()
+        );
 
         UserDto created = userService.createUser(userDto);
 
