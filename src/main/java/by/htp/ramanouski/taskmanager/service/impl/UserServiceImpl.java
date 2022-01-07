@@ -51,23 +51,28 @@ public class UserServiceImpl implements UserService {
         userEntity.setEncryptedPassword("test");
 
         userEntity.getAddress().setAddressId(serviceUtils.generatePublicAddressId());
+        userEntity.getAddress().setAddressUser(userEntity);
 
         OrganizationEntity organization = organizationService
                 .findByOrganizationName(organizationNameDto);
-
         if (organization == null) {
             organization = createNewOrganization(organizationNameDto);
-        } else {
-            organization.getUsers().add(userEntity);
         }
         userEntity.setOrganization(organization);
         organizationService.save(organization);
-        userEntity.getAddress().setAddressUser(userEntity);
 
         UserEntity savedUser = userRepository.save(userEntity);
-
         UserDto returnedValue = MAPPER.map(savedUser, UserDto.class);
+        return returnedValue;
+    }
 
+    @Override
+    public UserDto getUserByUserId(String userId) {
+        UserEntity userEntity = userRepository.findUserByUserId(userId);
+        if(userEntity==null){
+            throw new RuntimeException("There is no such user");
+        }
+        UserDto returnedValue = MAPPER.map(userEntity,UserDto.class);
         return returnedValue;
     }
 

@@ -23,10 +23,13 @@ public class UserController {
     }
 
 
-    @GetMapping
-    public String getUser(){
+    @GetMapping("/{userId}")
+    public UserRestResponse getUser(@PathVariable(name = "userId") String userId){
+        UserDto userDto = userService.getUserByUserId(userId);
+        ModelMapper mapper = new ModelMapper();
+        UserRestResponse returnedValue = mapper.map(userDto,UserRestResponse.class);
 
-        return "getUser";
+        return returnedValue;
     }
 
     @PostMapping

@@ -4,4 +4,5 @@ import by.htp.ramanouski.taskmanager.dto.UserDto;
 
 public interface UserService {
     UserDto createUser(UserDto userDto);
+    UserDto getUserByUserId(String userId);
 }
