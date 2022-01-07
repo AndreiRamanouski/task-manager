@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class UserDetailsRequestModel {
     private String organization;
     private String phoneNumber;
-    private String address;
+    private AddressDetailsRequestModel address;
     private String userName;
     private String email;
     private String password;

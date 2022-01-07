@@ -32,22 +32,22 @@ public class UserEntity {
     private String encryptedPassword;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "organization_id" ,nullable = false)
+    @JoinColumn(name = "organization_id", nullable = false)
     private OrganizationEntity organization;
 
     @Column(length = 30)
     private String phoneNumber;
 
-    @Column
-    private String address;
+//    @Column
+//    private String address;
 
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "address_id" ,nullable = false)
-//    private AddressEntity addresses;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", nullable = false)
+    private AddressEntity address;
 
-    @ManyToMany( cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "users_tasks", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
-    ,inverseJoinColumns = @JoinColumn(name="task_id", referencedColumnName = "id"))
+            , inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"))
     private List<TaskEntity> tasks;
 
 

@@ -27,6 +27,6 @@ public class AddressEntity {
     @Column
     private String streetName;
 
-//    @OneToOne(mappedBy = "addresses")
-//    private UserEntity user;
+    @OneToOne(mappedBy = "address")
+    private UserEntity addressUser;
 }

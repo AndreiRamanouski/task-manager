@@ -13,7 +13,7 @@ public class UserDto {
     private String userId;
     private OrganizationDto organization;
     private String phoneNumber;
-    private String address;
+    private AddressDto address;
     private String userName;
     private String email;
     private String password;

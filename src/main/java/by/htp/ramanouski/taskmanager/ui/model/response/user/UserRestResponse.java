@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRestResponse {
+    private Long id;
     private String userId;
     private String userName;
     private UserOrganizationREST organization;
+    private UserAddressREST address;
     private String email;
 }

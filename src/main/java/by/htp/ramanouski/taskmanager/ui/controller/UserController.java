@@ -32,8 +32,8 @@ public class UserController {
     @PostMapping
     public UserRestResponse createUser(@RequestBody UserDetailsRequestModel userDetails){
 
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userDetails,userDto);
+        ModelMapper mapper = new ModelMapper();
+        UserDto  userDto = mapper.map(userDetails,UserDto.class);
 
         userDto.setOrganization(
                 OrganizationDto.builder()
@@ -43,7 +43,6 @@ public class UserController {
 
         UserDto created = userService.createUser(userDto);
 
-        ModelMapper mapper = new ModelMapper();
         UserRestResponse returnedValue = mapper.map(created,UserRestResponse.class);
 
         return returnedValue;

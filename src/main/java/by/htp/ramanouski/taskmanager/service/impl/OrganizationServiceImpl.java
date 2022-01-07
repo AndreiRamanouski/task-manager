@@ -20,7 +20,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public OrganizationEntity findByOrganizationName(String organizationName) {
-        OrganizationEntity organization = findByOrganizationName(organizationName);
+        OrganizationEntity organization = organizationRepository.findByOrganizationName(organizationName);
         if(organization == null){
             return null;
         }
