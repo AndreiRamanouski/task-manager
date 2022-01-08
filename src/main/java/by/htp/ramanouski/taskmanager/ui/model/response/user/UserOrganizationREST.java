@@ -11,4 +11,6 @@ public class UserOrganizationREST {
     private Long id;
     private String organizationId;
     private String organizationName;
+    private String phoneNumber;
+    private UserAddressREST address;
 }

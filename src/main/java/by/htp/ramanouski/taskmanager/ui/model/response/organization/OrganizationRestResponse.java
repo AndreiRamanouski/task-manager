@@ -13,5 +13,7 @@ import java.util.List;
 public class OrganizationRestResponse {
     private String organizationId;
     private String organizationName;
+    private String phoneNumber;
+    private OrganizationAddressREST address;
     private List<OrganizationUserREST> users;
 }

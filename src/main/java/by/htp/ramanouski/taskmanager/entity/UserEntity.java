@@ -25,6 +25,9 @@ public class UserEntity {
     @Column(nullable = false, length = 50)
     private String userName;
 
+    @Column(length = 50)
+    private String lastName;
+
     @Column(nullable = false, length = 120, unique = true)
     private String email;
 
@@ -34,16 +37,6 @@ public class UserEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organization_id", nullable = false)
     private OrganizationEntity organization;
-
-    @Column(length = 30)
-    private String phoneNumber;
-
-//    @Column
-//    private String address;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id", nullable = false)
-    private AddressEntity address;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "users_tasks", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")

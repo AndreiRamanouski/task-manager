@@ -16,5 +16,7 @@ public class OrganizationDto {
     private Long id;
     private String organizationId;
     private String organizationName;
+    private String phoneNumber;
+    private AddressDto address;
     private List<UserDto> users;
 }

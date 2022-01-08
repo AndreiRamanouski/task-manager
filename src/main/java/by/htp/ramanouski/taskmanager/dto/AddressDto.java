@@ -12,5 +12,5 @@ public class AddressDto {
     private String addressId;
     private String countryName;
     private String streetName;
-    private UserDto addressUser;
+    private OrganizationDto addressOrganization;
 }

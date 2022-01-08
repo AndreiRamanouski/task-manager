@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 public class UserRestResponse {
     private Long id;
     private String userId;
-    private String userName;
-    private UserOrganizationREST organization;
-    private UserAddressREST address;
     private String email;
+    private String userName;
+    private String lastName;
+    private UserOrganizationREST organization;
+
 }

@@ -12,9 +12,8 @@ public class UserDto {
     private Long id;
     private String userId;
     private OrganizationDto organization;
-    private String phoneNumber;
-    private AddressDto address;
     private String userName;
+    private String lastName;
     private String email;
     private String password;
     private String encryptedPassword;

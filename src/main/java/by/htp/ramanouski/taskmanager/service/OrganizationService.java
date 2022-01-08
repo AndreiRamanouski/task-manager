@@ -8,5 +8,5 @@ public interface OrganizationService {
 
     OrganizationDto findByOrganizationId(String organizationId);
 
-    OrganizationEntity save(OrganizationEntity organization);
+    OrganizationDto createNewOrganization(OrganizationDto organization);
 }

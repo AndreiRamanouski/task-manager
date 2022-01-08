@@ -28,5 +28,5 @@ public class AddressEntity {
     private String streetName;
 
     @OneToOne(mappedBy = "address")
-    private UserEntity addressUser;
+    private OrganizationEntity addressOrganization;
 }

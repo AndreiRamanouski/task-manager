@@ -25,6 +25,13 @@ public class OrganizationEntity {
     @Column(nullable = false)
     private String organizationName;
 
-    @OneToMany(mappedBy = "organization")
+    @Column(length = 30)
+    private String phoneNumber;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", nullable = false)
+    private AddressEntity address;
+
+    @OneToMany(mappedBy = "organization", fetch = FetchType.LAZY)
     private List<UserEntity> users;
 }
