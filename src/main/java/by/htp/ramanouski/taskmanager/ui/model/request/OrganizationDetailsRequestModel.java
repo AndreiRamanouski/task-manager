@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class OrganizationDetailsRequestModel {
     private String organizationName;
     private String phoneNumber;
+    private String defaultPassword;
     private AddressDetailsRequestModel address;
 }

@@ -18,8 +18,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationRepository organizationRepository;
     private final ServiceUtils serviceUtils;
 
-    private final static ModelMapper MAPPER = new ModelMapper();
-
     @Autowired
     public OrganizationServiceImpl(OrganizationRepository organizationRepository,
                                    ServiceUtils serviceUtils) {
@@ -42,7 +40,8 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(organization == null){
             throw new RuntimeException("There is no organization with id " + organizationId);
         }
-        OrganizationDto returnedValue = MAPPER.map(organization,OrganizationDto.class);
+        ModelMapper mapper = new ModelMapper();
+        OrganizationDto returnedValue = mapper.map(organization,OrganizationDto.class);
         return returnedValue;
     }
 
@@ -52,7 +51,8 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (findByOrganizationName(organizationDto.getOrganizationName()) != null ){
             throw new RuntimeException("Organization with such name already exists");
         }
-        OrganizationEntity organizationEntity = MAPPER.map(organizationDto,OrganizationEntity.class);
+        ModelMapper mapper = new ModelMapper();
+        OrganizationEntity organizationEntity = mapper.map(organizationDto,OrganizationEntity.class);
 
         organizationEntity.getAddress().setAddressId(serviceUtils.generatePublicAddressId());
         organizationEntity.getAddress().setAddressOrganization(organizationEntity);
@@ -61,7 +61,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         organizationEntity.setUsers(new ArrayList<>());
 
         OrganizationEntity savedOrganization = organizationRepository.save(organizationEntity);
-        OrganizationDto returnedValue = MAPPER.map(savedOrganization,OrganizationDto.class);
+        OrganizationDto returnedValue = mapper.map(savedOrganization,OrganizationDto.class);
 
         return returnedValue;
     }

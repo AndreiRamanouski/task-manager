@@ -1,24 +1,46 @@
 package by.htp.ramanouski.taskmanager.ui.controller;
 
 import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
+import by.htp.ramanouski.taskmanager.dto.UserDto;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
+import by.htp.ramanouski.taskmanager.service.UserService;
+import by.htp.ramanouski.taskmanager.ui.model.request.OrganizationDetailsRequestModel;
+import by.htp.ramanouski.taskmanager.ui.model.request.UserDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.response.organization.OrganizationRestResponse;
+import by.htp.ramanouski.taskmanager.ui.model.response.user.UserRestResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/organizations")  // http:///localhost:8080/users
 public class OrganizationController {
 
     private final OrganizationService organizationService;
+    private final UserService userService;
 
     @Autowired
-    public OrganizationController(OrganizationService organizationService) {
+    public OrganizationController(OrganizationService organizationService,
+                                  UserService userService) {
         this.organizationService = organizationService;
+        this.userService = userService;
+    }
+
+    @PostMapping
+    public UserRestResponse createUserAndOrganization(@RequestBody UserDetailsRequestModel userDetails) {
+
+        ModelMapper mapper = new ModelMapper();
+        OrganizationDetailsRequestModel organization = userDetails.getOrganization();
+        OrganizationDto organizationDto = mapper.map(organization, OrganizationDto.class);
+        OrganizationDto savedOrganization = organizationService.createNewOrganization(organizationDto);
+
+        UserDto userDto = mapper.map(userDetails, UserDto.class);
+        userDto.setOrganization(savedOrganization);
+        UserDto createdUser = userService.createUser(userDto);
+
+        UserRestResponse returnedValue = mapper.map(createdUser, UserRestResponse.class);
+
+        return returnedValue;
     }
 
     @GetMapping("/{organizationId}")

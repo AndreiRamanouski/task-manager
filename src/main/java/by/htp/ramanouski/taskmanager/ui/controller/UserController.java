@@ -20,7 +20,6 @@ public class UserController {
 
     private final UserService userService;
     private final OrganizationService organizationService;
-    private final ModelMapper MAPPER = new ModelMapper();
 
     @Autowired
     public UserController(UserService userService,
@@ -32,59 +31,40 @@ public class UserController {
     @PostMapping("/{organizationId}")
     public UserRestResponse saveUser(@RequestBody UserWithNoOrganizationRequest user,
                                      @PathVariable(name = "organizationId") String organizationId) {
-        if (user.getPassword().length() < 6) {
-            throw new RuntimeException("User password should be 6 characters and longer");
-        }
-
         OrganizationDto organizationDto = organizationService.findByOrganizationId(organizationId);
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user,userDto);
 
         userDto.setOrganization(organizationDto);
+        userDto.setPassword(organizationDto.getDefaultPassword());
+        organizationDto.getUsers().add(userDto);
 
         UserDto createdUser = userService.createUser(userDto);
-        UserRestResponse returnedValue = MAPPER.map(createdUser, UserRestResponse.class);
-
+        ModelMapper mapper = new ModelMapper();
+        UserRestResponse returnedValue = mapper.map(createdUser, UserRestResponse.class);
         return returnedValue;
-
     }
 
 
     @GetMapping("/{userId}")
     public UserRestResponse getUser(@PathVariable(name = "userId") String userId) {
         UserDto userDto = userService.getUserByUserId(userId);
-        UserRestResponse returnedValue = MAPPER.map(userDto, UserRestResponse.class);
+        ModelMapper mapper = new ModelMapper();
+        UserRestResponse returnedValue = mapper.map(userDto, UserRestResponse.class);
 
         return returnedValue;
     }
 
-    @PostMapping("/organizations")
-    public UserRestResponse createUserAndOrganization(@RequestBody UserDetailsRequestModel userDetails) {
-        if (userDetails.getPassword().length() < 6) {
-            throw new RuntimeException("User password should be 6 characters and longer");
-        }
 
-        OrganizationDetailsRequestModel organization = userDetails.getOrganization();
-        OrganizationDto organizationDto = MAPPER.map(organization, OrganizationDto.class);
-        OrganizationDto savedOrganization = organizationService.createNewOrganization(organizationDto);
-
-        UserDto userDto = MAPPER.map(userDetails, UserDto.class);
-        userDto.setOrganization(savedOrganization);
-        UserDto createdUser = userService.createUser(userDto);
-
-        UserRestResponse returnedValue = MAPPER.map(createdUser, UserRestResponse.class);
-
-        return returnedValue;
-    }
 
     @PutMapping({"{userId}"})
-    public UserRestResponse updateUser(@RequestBody UserDetailsRequestModel userDetails,
+    public String updateUser(@RequestBody UserDetailsRequestModel userDetails,
                              @PathVariable(name = "userId") String userId) {
-        return null;
+        return "updateUser";
     }
 
-    @DeleteMapping
-    public String deleteUser() {
+    @DeleteMapping({"{userId}"})
+    public String deleteUser(@PathVariable(name = "userId") String userId) {
 
         return "deleteUser";
     }

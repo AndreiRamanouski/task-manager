@@ -25,6 +25,9 @@ public class OrganizationEntity {
     @Column(nullable = false)
     private String organizationName;
 
+    @Column(nullable = false)
+    private String defaultPassword;
+
     @Column(length = 30)
     private String phoneNumber;
 

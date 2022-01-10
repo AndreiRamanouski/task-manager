@@ -11,5 +11,4 @@ public class UserWithNoOrganizationRequest {
     private String userName;
     private String lastName;
     private String email;
-    private String password;
 }

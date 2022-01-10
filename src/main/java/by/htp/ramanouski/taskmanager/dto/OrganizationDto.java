@@ -17,6 +17,7 @@ public class OrganizationDto {
     private String organizationId;
     private String organizationName;
     private String phoneNumber;
+    private String defaultPassword;
     private AddressDto address;
     private List<UserDto> users;
 }

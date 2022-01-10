@@ -51,9 +51,5 @@ public class UserServiceImpl implements UserService {
         return returnedValue;
     }
 
-    @Override
-    public UserDto save(UserDto userDto) {
-        return null;
-    }
 
 }
