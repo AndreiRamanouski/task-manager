@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ServiceUtils serviceUtils;
-    private final static ModelMapper MAPPER = new ModelMapper();
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
@@ -32,12 +31,13 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findUserByEmail(userDto.getEmail()) != null) {
             throw new RuntimeException("User with this email already exists");
         }
-        UserEntity userEntity = MAPPER.map(userDto,UserEntity.class);
+        ModelMapper mapper = new ModelMapper();
+        UserEntity userEntity = mapper.map(userDto,UserEntity.class);
         userEntity.setUserId(serviceUtils.generatePublicUserId());
         userEntity.setEncryptedPassword("test");
 
         UserEntity savedUser = userRepository.save(userEntity);
-        UserDto returnedValue = MAPPER.map(savedUser, UserDto.class);
+        UserDto returnedValue = mapper.map(savedUser, UserDto.class);
         return returnedValue;
     }
 
@@ -47,7 +47,8 @@ public class UserServiceImpl implements UserService {
         if(userEntity==null){
             throw new RuntimeException("There is no such user");
         }
-        UserDto returnedValue = MAPPER.map(userEntity,UserDto.class);
+        ModelMapper mapper = new ModelMapper();
+        UserDto returnedValue = mapper.map(userEntity,UserDto.class);
         return returnedValue;
     }
 

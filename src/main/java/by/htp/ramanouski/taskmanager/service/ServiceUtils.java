@@ -19,6 +19,9 @@ public class ServiceUtils {
     public String generatePublicOrganizationId(){
         return generateRandomString();
     }
+    public String generatePublicTaskId(){
+        return generateRandomString();
+    }
     public String generatePublicAddressId(){
         return generateRandomString();
     }

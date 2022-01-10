@@ -1,11 +1,11 @@
 package by.htp.ramanouski.taskmanager.service.impl;
 
 import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
-import by.htp.ramanouski.taskmanager.entity.AddressEntity;
 import by.htp.ramanouski.taskmanager.entity.OrganizationEntity;
 import by.htp.ramanouski.taskmanager.repository.OrganizationRepository;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
 import by.htp.ramanouski.taskmanager.service.ServiceUtils;
+import by.htp.ramanouski.taskmanager.service.exception.ServiceException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     public OrganizationDto findByOrganizationId(String organizationId) {
         OrganizationEntity organization = organizationRepository.findByOrganizationId(organizationId);
         if(organization == null){
-            throw new RuntimeException("There is no organization with id " + organizationId);
+            throw new ServiceException("There is no organization with id " + organizationId);
         }
         ModelMapper mapper = new ModelMapper();
         OrganizationDto returnedValue = mapper.map(organization,OrganizationDto.class);
@@ -49,7 +49,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     public OrganizationDto createNewOrganization(OrganizationDto organizationDto) {
 
         if (findByOrganizationName(organizationDto.getOrganizationName()) != null ){
-            throw new RuntimeException("Organization with such name already exists");
+            throw new ServiceException("Organization with such name already exists");
         }
         ModelMapper mapper = new ModelMapper();
         OrganizationEntity organizationEntity = mapper.map(organizationDto,OrganizationEntity.class);

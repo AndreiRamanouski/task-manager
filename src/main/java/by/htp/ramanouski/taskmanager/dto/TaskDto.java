@@ -2,6 +2,7 @@ package by.htp.ramanouski.taskmanager.dto;
 
 import by.htp.ramanouski.taskmanager.entity.UserEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

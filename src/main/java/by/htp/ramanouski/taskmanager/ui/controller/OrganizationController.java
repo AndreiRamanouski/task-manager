@@ -4,6 +4,7 @@ import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
 import by.htp.ramanouski.taskmanager.dto.UserDto;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
 import by.htp.ramanouski.taskmanager.service.UserService;
+import by.htp.ramanouski.taskmanager.ui.controller.exception.ControllerException;
 import by.htp.ramanouski.taskmanager.ui.model.request.OrganizationDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.response.organization.OrganizationRestResponse;
@@ -48,7 +49,7 @@ public class OrganizationController {
         OrganizationDto organizationDto = organizationService.findByOrganizationId(organizationId);
 
         if(organizationDto == null){
-            throw new RuntimeException("No organization with such id" + organizationId);
+            throw new ControllerException("No organization with such id" + organizationId);
         }
 
         ModelMapper mapper = new ModelMapper();
