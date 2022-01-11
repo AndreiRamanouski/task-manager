@@ -6,10 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UserDto {
     private Long id;
     private String userId;
@@ -19,4 +21,5 @@ public class UserDto {
     private String email;
     private String password;
     private String encryptedPassword;
+    private List<TaskDto> tasks;
 }

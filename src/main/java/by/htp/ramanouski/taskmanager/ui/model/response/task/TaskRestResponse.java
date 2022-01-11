@@ -1,5 +1,7 @@
-package by.htp.ramanouski.taskmanager.dto;
+package by.htp.ramanouski.taskmanager.ui.model.response.task;
 
+
+import by.htp.ramanouski.taskmanager.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +14,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskDto {
+public class TaskRestResponse {
     private Long id;
     private String taskId;
     private String title;
     private LocalDate targetDate;
     private boolean isFinished;
-    private List<UserDto> users;
+    private List<TaskUserREST> users;
+    private List<String> allUsersInTheOrganization;
 }

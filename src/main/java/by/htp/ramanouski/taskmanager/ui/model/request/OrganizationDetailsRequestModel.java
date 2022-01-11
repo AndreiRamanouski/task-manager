@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrganizationDetailsRequestModel {
+    private Long id;
+    private String organizationId;
     private String organizationName;
     private String phoneNumber;
     private String defaultPassword;

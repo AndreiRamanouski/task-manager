@@ -3,9 +3,8 @@ package by.htp.ramanouski.taskmanager.ui.controller;
 import by.htp.ramanouski.taskmanager.dto.AddressDto;
 import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
 import by.htp.ramanouski.taskmanager.dto.UserDto;
-import by.htp.ramanouski.taskmanager.entity.UserEntity;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
-import by.htp.ramanouski.taskmanager.service.ServiceUtils;
+import by.htp.ramanouski.taskmanager.service.utils.ServiceUtils;
 import by.htp.ramanouski.taskmanager.service.UserService;
 import by.htp.ramanouski.taskmanager.ui.controller.exception.ControllerException;
 import by.htp.ramanouski.taskmanager.ui.model.request.AddressDetailsRequestModel;
@@ -19,10 +18,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

@@ -33,6 +33,6 @@ public class TaskEntity {
     @Column
     private boolean isFinished;
 
-    @ManyToMany(mappedBy = "tasks" ,cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tasks" ,cascade = CascadeType.PERSIST)
     private List<UserEntity> users;
 }

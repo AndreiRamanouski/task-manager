@@ -1,13 +1,14 @@
 package by.htp.ramanouski.taskmanager.ui.model.response.organization;
 
-import by.htp.ramanouski.taskmanager.dto.UserDto;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrganizationRestResponse {

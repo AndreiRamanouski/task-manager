@@ -4,10 +4,9 @@ import by.htp.ramanouski.taskmanager.dto.AddressDto;
 import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
 import by.htp.ramanouski.taskmanager.entity.AddressEntity;
 import by.htp.ramanouski.taskmanager.entity.OrganizationEntity;
-import by.htp.ramanouski.taskmanager.entity.TaskEntity;
 import by.htp.ramanouski.taskmanager.entity.UserEntity;
 import by.htp.ramanouski.taskmanager.repository.OrganizationRepository;
-import by.htp.ramanouski.taskmanager.service.ServiceUtils;
+import by.htp.ramanouski.taskmanager.service.utils.ServiceUtils;
 import by.htp.ramanouski.taskmanager.service.exception.ServiceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -4,7 +4,7 @@ import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
 import by.htp.ramanouski.taskmanager.entity.OrganizationEntity;
 import by.htp.ramanouski.taskmanager.repository.OrganizationRepository;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
-import by.htp.ramanouski.taskmanager.service.ServiceUtils;
+import by.htp.ramanouski.taskmanager.service.utils.ServiceUtils;
 import by.htp.ramanouski.taskmanager.service.exception.ServiceException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

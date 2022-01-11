@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder
 @Table(name = "addresses")
 public class AddressEntity {
 
