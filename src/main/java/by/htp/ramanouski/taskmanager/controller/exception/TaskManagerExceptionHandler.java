@@ -11,7 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
 
-//@ControllerAdvice
+@ControllerAdvice
 public class TaskManagerExceptionHandler {
 
     @ExceptionHandler(value = {ControllerException.class, ServiceException.class})
