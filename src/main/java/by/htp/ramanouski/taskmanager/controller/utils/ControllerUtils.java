@@ -1,4 +1,4 @@
-package by.htp.ramanouski.taskmanager.ui.controller.utils;
+package by.htp.ramanouski.taskmanager.controller.utils;
 
 import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
 import org.springframework.stereotype.Component;

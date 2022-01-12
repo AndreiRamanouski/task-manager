@@ -1,4 +1,4 @@
-package by.htp.ramanouski.taskmanager.ui.controller;
+package by.htp.ramanouski.taskmanager.controller;
 
 import by.htp.ramanouski.taskmanager.dto.AddressDto;
 import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
@@ -6,7 +6,7 @@ import by.htp.ramanouski.taskmanager.dto.UserDto;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
 import by.htp.ramanouski.taskmanager.service.utils.ServiceUtils;
 import by.htp.ramanouski.taskmanager.service.UserService;
-import by.htp.ramanouski.taskmanager.ui.controller.exception.ControllerException;
+import by.htp.ramanouski.taskmanager.controller.exception.ControllerException;
 import by.htp.ramanouski.taskmanager.ui.model.request.AddressDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.OrganizationDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserDetailsRequestModel;

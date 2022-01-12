@@ -1,11 +1,10 @@
-package by.htp.ramanouski.taskmanager.ui.controller;
+package by.htp.ramanouski.taskmanager.controller;
 
 import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
 import by.htp.ramanouski.taskmanager.dto.TaskDto;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
 import by.htp.ramanouski.taskmanager.service.TaskService;
-import by.htp.ramanouski.taskmanager.service.UserService;
-import by.htp.ramanouski.taskmanager.ui.controller.utils.ControllerUtils;
+import by.htp.ramanouski.taskmanager.controller.utils.ControllerUtils;
 import by.htp.ramanouski.taskmanager.ui.model.request.TaskDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.response.task.TaskRestResponse;
 import org.modelmapper.ModelMapper;

@@ -24,15 +24,16 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final OrganizationRepository organizationRepository;
-    private final EmailSenderService emailSenderService;
     private final ServiceUtils serviceUtils;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository, OrganizationRepository organizationRepository, EmailSenderService emailSenderService, ServiceUtils serviceUtils) {
+    public TaskServiceImpl(TaskRepository taskRepository,
+                           UserRepository userRepository,
+                           OrganizationRepository organizationRepository,
+                           ServiceUtils serviceUtils) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
         this.organizationRepository = organizationRepository;
-        this.emailSenderService = emailSenderService;
         this.serviceUtils = serviceUtils;
     }
 
@@ -59,36 +60,19 @@ public class TaskServiceImpl implements TaskService {
         List<UserEntity> users = new ArrayList<>();
         usersPublicIdToAssign.forEach((userPublicId) -> {
             UserEntity userEntity = userRepository.findUserByUserId(userPublicId);
-            if (userEntity.getTasks() == null){
+            if (userEntity.getTasks() == null) {
                 userEntity.setTasks(new ArrayList<>());
             }
             userEntity.getTasks().add(taskEntity);
             users.add(userEntity);
         });
-
         taskEntity.setUsers(users);
         TaskEntity savedTask = taskRepository.save(taskEntity);
-
-
         TaskDto returnedValue = mapper.map(savedTask, TaskDto.class);
-        sendMessages(returnedValue, userId);
+
+        serviceUtils.sendMessages(returnedValue);
+
         return returnedValue;
     }
 
-    private void sendMessages(TaskDto taskDto, String userId) {
-        UserEntity userEntity = userRepository.findUserByUserId(userId);
-        String userName;
-        if (userEntity == null) {
-            userName = "Somebody";
-        } else {
-            userName = userEntity.getUserName() + " " + userEntity.getLastName();
-        }
-        String messageTitle = "You have a new task" + taskDto.getTitle();
-        String massageBody = userName + " assigned a task for you. Due date is " + taskDto.getTargetDate();
-        List<String> emails = new ArrayList<>();
-        taskDto.getUsers().forEach((user) -> {
-            emails.add(user.getEmail());
-        });
-        emailSenderService.sendMessages(emails, messageTitle, massageBody);
-    }
 }
