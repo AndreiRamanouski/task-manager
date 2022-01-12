@@ -11,7 +11,10 @@ import by.htp.ramanouski.taskmanager.ui.model.response.user.UserRestResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/users") // http:///localhost:8080/users
@@ -27,9 +30,11 @@ public class UserController {
         this.organizationService = organizationService;
     }
 
-    @PostMapping("/{organizationId}")
+
+    @PostMapping("/{userId}/organizations/{organizationId}")
     public UserRestResponse saveUser(@RequestBody UserWithNoOrganizationRequest user,
-                                     @PathVariable(name = "organizationId") String organizationId) {
+                                     @PathVariable(name = "organizationId") String organizationId,
+                                     @PathVariable(name = "userId") String userId) {
         OrganizationDto organizationDto = organizationService.findByOrganizationId(organizationId);
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user,userDto);
@@ -38,7 +43,7 @@ public class UserController {
         userDto.setPassword(organizationDto.getDefaultPassword());
         organizationDto.getUsers().add(userDto);
 
-        UserDto createdUser = userService.createUser(userDto);
+        UserDto createdUser = userService.createNewUser(userDto);
         ModelMapper mapper = new ModelMapper();
         UserRestResponse returnedValue = mapper.map(createdUser, UserRestResponse.class);
         return returnedValue;
@@ -53,19 +58,4 @@ public class UserController {
 
         return returnedValue;
     }
-
-
-
-    @PutMapping({"{userId}"})
-    public String updateUser(@RequestBody UserDetailsRequestModel userDetails,
-                             @PathVariable(name = "userId") String userId) {
-        return "updateUser";
-    }
-
-    @DeleteMapping({"{userId}"})
-    public String deleteUser(@PathVariable(name = "userId") String userId) {
-
-        return "deleteUser";
-    }
-
 }

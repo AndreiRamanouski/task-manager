@@ -37,7 +37,7 @@ public class OrganizationController {
 
         UserDto userDto = mapper.map(userDetails, UserDto.class);
         userDto.setOrganization(savedOrganization);
-        UserDto createdUser = userService.createUser(userDto);
+        UserDto createdUser = userService.createNewAdminUser(userDto);
 
         UserRestResponse returnedValue = mapper.map(createdUser, UserRestResponse.class);
 

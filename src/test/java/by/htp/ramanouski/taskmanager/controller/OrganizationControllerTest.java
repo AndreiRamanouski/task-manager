@@ -20,6 +20,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -61,7 +63,7 @@ class OrganizationControllerTest {
         when(organizationService.createNewOrganization(any(OrganizationDto.class))).thenReturn(organizationDto);
         UserDto userDto = createMockUserDto();
         userDto.setOrganization(organizationDto);
-        when(userService.createUser(any(UserDto.class))).thenReturn(userDto);
+        when(userService.createNewAdminUser(any(UserDto.class))).thenReturn(userDto);
         UserDetailsRequestModel userDetailsRequestModel = UserDetailsRequestModel.builder()
                 .userName("MockName").lastName("MockLastName")
                 .email("mock@mail.ru").password("123")

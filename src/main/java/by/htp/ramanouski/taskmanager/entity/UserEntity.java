@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -43,6 +44,13 @@ public class UserEntity {
     @JoinTable(name = "users_tasks", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
             , inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"))
     private List<TaskEntity> tasks;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST},
+            fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles" ,
+            joinColumns = @JoinColumn(name = "users_id",referencedColumnName = "id")
+            ,inverseJoinColumns = @JoinColumn(name = "roles_id",referencedColumnName = "id"))
+    private Collection<RoleEntity> roles;
 
 
 }
