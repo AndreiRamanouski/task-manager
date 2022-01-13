@@ -5,6 +5,7 @@ import by.htp.ramanouski.taskmanager.entity.RoleEntity;
 import by.htp.ramanouski.taskmanager.entity.UserEntity;
 import by.htp.ramanouski.taskmanager.repository.RoleRepository;
 import by.htp.ramanouski.taskmanager.repository.UserRepository;
+import by.htp.ramanouski.taskmanager.service.exception.ServiceException;
 import by.htp.ramanouski.taskmanager.service.utils.ServiceUtils;
 import by.htp.ramanouski.taskmanager.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     private UserDto createUser(UserDto userDto, List<String> roles) {
         if (userRepository.findUserByEmail(userDto.getEmail()) != null) {
-            throw new RuntimeException("User with this email already exists");
+            throw new ServiceException("User with this email already exists");
         }
 
         ModelMapper mapper = new ModelMapper();
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserByUserId(String userId) {
         UserEntity userEntity = userRepository.findUserByUserId(userId);
         if(userEntity==null){
-            throw new RuntimeException("There is no such user");
+            throw new ServiceException("There is no such user");
         }
         ModelMapper mapper = new ModelMapper();
         UserDto returnedValue = mapper.map(userEntity,UserDto.class);

@@ -1,10 +1,13 @@
 package by.htp.ramanouski.taskmanager.controller;
 
 
+import by.htp.ramanouski.taskmanager.dto.AddressDto;
 import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
 import by.htp.ramanouski.taskmanager.dto.UserDto;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
 import by.htp.ramanouski.taskmanager.service.UserService;
+import by.htp.ramanouski.taskmanager.ui.model.request.AddressDetailsRequestModel;
+import by.htp.ramanouski.taskmanager.ui.model.request.OrganizationDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserWithNoOrganizationRequest;
 import by.htp.ramanouski.taskmanager.ui.model.response.user.UserRestResponse;
@@ -37,7 +40,7 @@ public class UserController {
                                      @PathVariable(name = "userId") String userId) {
         OrganizationDto organizationDto = organizationService.findByOrganizationId(organizationId);
         UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(user,userDto);
+        BeanUtils.copyProperties(user, userDto);
 
         userDto.setOrganization(organizationDto);
         userDto.setPassword(organizationDto.getDefaultPassword());
