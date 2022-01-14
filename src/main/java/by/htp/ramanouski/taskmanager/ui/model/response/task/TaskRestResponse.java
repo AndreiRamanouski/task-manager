@@ -21,5 +21,5 @@ public class TaskRestResponse {
     private LocalDate targetDate;
     private boolean isFinished;
     private List<TaskUserREST> users;
-    private List<String> allUsersInTheOrganization;
+    private List<TaskUsersToAssignREST> allUsersInTheOrganization;
 }

@@ -50,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto saveNewTask(String organizationId, TaskDto taskDto,
+    public TaskDto saveNewTask(TaskDto taskDto,
                                List<String> usersPublicIdToAssign, String userId) {
         ModelMapper mapper = new ModelMapper();
         TaskEntity taskEntity = mapper.map(taskDto, TaskEntity.class);

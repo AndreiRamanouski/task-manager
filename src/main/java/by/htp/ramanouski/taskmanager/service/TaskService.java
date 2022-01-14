@@ -8,5 +8,5 @@ import java.util.List;
 public interface TaskService {
     TaskDto findTaskByTaskId(String taskId);
 
-    TaskDto saveNewTask(String organizationId, TaskDto taskDto, List<String> usersPublicIdToAssign, String userId);
+    TaskDto saveNewTask(TaskDto taskDto, List<String> usersPublicIdToAssign, String userId);
 }

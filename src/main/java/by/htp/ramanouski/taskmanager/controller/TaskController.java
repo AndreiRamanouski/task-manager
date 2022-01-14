@@ -28,7 +28,7 @@ public class TaskController {
     }
 
     @GetMapping("organizations/{organizationId}/tasks/{taskId}")
-    private TaskRestResponse getTask(@PathVariable(name = "organizationId") String organizationId,
+    public TaskRestResponse getTask(@PathVariable(name = "organizationId") String organizationId,
                                      @PathVariable(name = "taskId") String taskId) {
         TaskDto taskDto = taskService.findTaskByTaskId(taskId);
         OrganizationDto organizationDto = organizationService.findByOrganizationId(organizationId);
@@ -41,7 +41,7 @@ public class TaskController {
     }
 
     @GetMapping("organizations/{organizationId}/tasks")
-    private TaskRestResponse createTask(@PathVariable(name = "organizationId") String organizationId) {
+    public TaskRestResponse createTask(@PathVariable(name = "organizationId") String organizationId) {
         OrganizationDto organizationDto = organizationService.findByOrganizationId(organizationId);
         TaskRestResponse returnedValue = TaskRestResponse.builder()
                 .allUsersInTheOrganization(controllerUtils.getAllUsersIdInOrganization(organizationDto))
@@ -50,7 +50,7 @@ public class TaskController {
     }
 
     @PostMapping("/organizations/{organizationId}/users/{userId}/tasks")
-    private TaskRestResponse createTask(@RequestBody TaskDetailsRequestModel requestModel,
+    public TaskRestResponse createTask(@RequestBody TaskDetailsRequestModel requestModel,
                                         @PathVariable(name = "organizationId") String organizationId,
                                         @PathVariable(name = "userId") String userId) {
         OrganizationDto organizationDto = organizationService.findByOrganizationId(organizationId);
@@ -59,7 +59,7 @@ public class TaskController {
         ModelMapper mapper = new ModelMapper();
         TaskDto taskToSave = mapper.map(requestModel, TaskDto.class);
 
-        TaskDto taskDto = taskService.saveNewTask(organizationId, taskToSave, usersPublicIdToAssign, userId);
+        TaskDto taskDto = taskService.saveNewTask(taskToSave, usersPublicIdToAssign, userId);
 
         TaskRestResponse returnedValue = mapper.map(taskDto, TaskRestResponse.class);
         returnedValue.setAllUsersInTheOrganization(controllerUtils.getAllUsersIdInOrganization(organizationDto));

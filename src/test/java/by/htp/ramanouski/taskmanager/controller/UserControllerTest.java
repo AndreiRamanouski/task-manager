@@ -2,12 +2,14 @@ package by.htp.ramanouski.taskmanager.controller;
 
 import by.htp.ramanouski.taskmanager.dto.AddressDto;
 import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
+import by.htp.ramanouski.taskmanager.dto.TaskDto;
 import by.htp.ramanouski.taskmanager.dto.UserDto;
 import by.htp.ramanouski.taskmanager.entity.AddressEntity;
 import by.htp.ramanouski.taskmanager.entity.OrganizationEntity;
 import by.htp.ramanouski.taskmanager.entity.UserEntity;
 import by.htp.ramanouski.taskmanager.repository.UserRepository;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
+import by.htp.ramanouski.taskmanager.service.TaskService;
 import by.htp.ramanouski.taskmanager.service.UserService;
 import by.htp.ramanouski.taskmanager.service.exception.ServiceException;
 import by.htp.ramanouski.taskmanager.service.utils.ServiceUtils;
@@ -19,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -90,6 +94,8 @@ class UserControllerTest {
 
         assertNotNull(userRestResponse);
         assertEquals(newUser.getUserId(), userRestResponse.getUserId());
+        assertEquals(newUser.getOrganization().getOrganizationId(),userRestResponse.getOrganization().getOrganizationId());
+
     }
 
     @Test
