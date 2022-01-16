@@ -14,7 +14,7 @@ import java.util.Date;
 @ControllerAdvice
 public class TaskManagerExceptionHandler {
 
-    @ExceptionHandler(value = {ControllerException.class, ServiceException.class})
+    @ExceptionHandler(value = {ServiceException.class})
     public ResponseEntity<Object> handleUserServiceException(Exception exception,
                                                              WebRequest request){
 

@@ -15,6 +15,7 @@ import by.htp.ramanouski.taskmanager.service.exception.ServiceException;
 import by.htp.ramanouski.taskmanager.service.utils.ServiceUtils;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserWithNoOrganizationRequest;
 import by.htp.ramanouski.taskmanager.ui.model.response.user.UserRestResponse;
+import by.htp.ramanouski.taskmanager.ui.model.response.user.UserTaskREST;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -35,6 +39,8 @@ class UserControllerTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired TaskService taskService;
 
     @Autowired
     private OrganizationService organizationService;
@@ -57,7 +63,6 @@ class UserControllerTest {
     @Test
     void saveUser() {
         OrganizationDto newOrganization = organizationService.createNewOrganization(organizationDto);
-
         String organizationId = newOrganization.getOrganizationId();
         UserRestResponse userRestResponse =
                 userController.saveUser(userWithNoOrganizationRequest, organizationId, "userId");
@@ -67,27 +72,40 @@ class UserControllerTest {
 
     @Test
     void saveUser_ThrowsServiceException() {
-        OrganizationDto newOrganization = organizationService.createNewOrganization(organizationDto);
-        UserDto userDto = createUserDtoTests();
-        String organizationId = newOrganization.getOrganizationId();
-        userDto.setOrganization(newOrganization);
-        userService.createNewUser(userDto);
+        UserDto newUser = userService.createNewUser(createAndInitializeCompleteUserDtoWithOrganizationDto());
+        String organizationId = newUser.getOrganization().getOrganizationId();
         UserWithNoOrganizationRequest build = UserWithNoOrganizationRequest.builder()
-                .userName("Ivan").lastName("Ivanov").email(userDto.getEmail()).build();
+                .userName("Ivan").lastName("Ivanov").email(newUser.getEmail()).build();
         assertThrows(ServiceException.class, () -> {
             userController.saveUser(build, organizationId, "userId");
 
         });
     }
 
+    @Test
+    void getUser_WithTasksTest() {
+        UserDto newUser = userService.createNewUser(createAndInitializeCompleteUserDtoWithOrganizationDto());
+        String userId = newUser.getUserId();
+        TaskDto taskDto = taskService.saveNewTask(TaskDto.builder()
+                .isFinished(false)
+                .targetDate(LocalDate.now())
+                .title("Title")
+                .build(), List.of(userId), userId);
+
+        UserRestResponse userRestResponse = userController.getUser(userId);
+
+        assertThat(userRestResponse.getTasks(), hasSize(1));
+
+        UserTaskREST userTaskREST = userRestResponse.getTasks().get(0);
+
+        assertEquals(taskDto.getTaskId(),userTaskREST.getTaskId());
+        assertEquals(taskDto.getTitle(),userTaskREST.getTitle());
+        assertEquals(taskDto.getTargetDate(), userTaskREST.getTargetDate());
+    }
 
     @Test
     void getUser() {
-
-        OrganizationDto newOrganization = organizationService.createNewOrganization(organizationDto);
-        UserDto userDto = createUserDtoTests();
-        userDto.setOrganization(newOrganization);
-        UserDto newUser = userService.createNewUser(userDto);
+        UserDto newUser = userService.createNewUser(createAndInitializeCompleteUserDtoWithOrganizationDto());
         String userId = newUser.getUserId();
 
         UserRestResponse userRestResponse = userController.getUser(userId);
@@ -95,7 +113,6 @@ class UserControllerTest {
         assertNotNull(userRestResponse);
         assertEquals(newUser.getUserId(), userRestResponse.getUserId());
         assertEquals(newUser.getOrganization().getOrganizationId(),userRestResponse.getOrganization().getOrganizationId());
-
     }
 
     @Test
@@ -105,6 +122,15 @@ class UserControllerTest {
         });
 
     }
+
+
+    private UserDto createAndInitializeCompleteUserDtoWithOrganizationDto(){
+        OrganizationDto newOrganization = organizationService.createNewOrganization(organizationDto);
+        UserDto userDto = createUserDtoTests();
+        userDto.setOrganization(newOrganization);
+        return userDto;
+    }
+
 
     private OrganizationDto createOrganizationDtoTests() {
         return OrganizationDto.builder()
@@ -126,4 +152,6 @@ class UserControllerTest {
                 .password("123")
                 .build();
     }
+
+
 }

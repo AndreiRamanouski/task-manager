@@ -4,7 +4,6 @@ import by.htp.ramanouski.taskmanager.dto.OrganizationDto;
 import by.htp.ramanouski.taskmanager.dto.UserDto;
 import by.htp.ramanouski.taskmanager.service.OrganizationService;
 import by.htp.ramanouski.taskmanager.service.UserService;
-import by.htp.ramanouski.taskmanager.controller.exception.ControllerException;
 import by.htp.ramanouski.taskmanager.ui.model.request.OrganizationDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.response.organization.OrganizationRestResponse;
@@ -47,10 +46,6 @@ public class OrganizationController {
     @GetMapping("/{organizationId}")
     public OrganizationRestResponse getOrganization(@PathVariable String organizationId){
         OrganizationDto organizationDto = organizationService.findByOrganizationId(organizationId);
-
-        if(organizationDto == null){
-            throw new ControllerException("No organization with such id" + organizationId);
-        }
 
         ModelMapper mapper = new ModelMapper();
         OrganizationRestResponse returnedValue = mapper.map(organizationDto, OrganizationRestResponse.class);

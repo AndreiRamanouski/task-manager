@@ -14,5 +14,4 @@ public class UserOrganizationREST {
     private String organizationId;
     private String organizationName;
     private String phoneNumber;
-    private UserAddressREST address;
 }
