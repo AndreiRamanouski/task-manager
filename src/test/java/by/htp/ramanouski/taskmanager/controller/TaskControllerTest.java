@@ -55,7 +55,8 @@ class TaskControllerTest {
         UserDto userDto = saveUserAndOrganizationInDatabase();
         TaskRestResponse restResponse = createAndSaveTaskToDatabase(userDto.getUserId());
 
-        TaskRestResponse task = taskController.getTask(userDto.getOrganization().getOrganizationId(), restResponse.getTaskId());
+        TaskRestResponse task = taskController
+                .getTask(userDto.getOrganization().getOrganizationId(), restResponse.getTaskId());
         assertNotNull(task);
         assertThat(task.getUsers(), hasSize(1));
     }
@@ -63,14 +64,15 @@ class TaskControllerTest {
     @Test
     void createTask_GET() {
         UserDto userDto = saveUserAndOrganizationInDatabase();
-        TaskRestResponse task = taskController.createTask(userDto.getOrganization().getOrganizationId());
+        TaskRestResponse task = taskController
+                .createTask(userDto.getOrganization().getOrganizationId(), "fakeId");
         assertNotNull(task);
     }
 
     @Test
     void createTask_GET_ThrowsServiceException() {
         assertThrows(ServiceException.class, () -> {
-            taskController.createTask("randomId");
+            taskController.createTask("randomId", "randomId");
         });
     }
 

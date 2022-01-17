@@ -11,11 +11,16 @@ import by.htp.ramanouski.taskmanager.repository.UserRepository;
 import by.htp.ramanouski.taskmanager.service.TaskService;
 import by.htp.ramanouski.taskmanager.service.exception.ServiceException;
 import by.htp.ramanouski.taskmanager.service.utils.ServiceUtils;
+import by.htp.ramanouski.taskmanager.ui.model.response.task.TaskRestResponse;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.modelmapper.internal.bytebuddy.description.method.MethodDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -71,6 +76,23 @@ public class TaskServiceImpl implements TaskService {
         TaskDto returnedValue = mapper.map(savedTask, TaskDto.class);
 
         serviceUtils.sendMessages(returnedValue);
+
+        return returnedValue;
+    }
+
+    @Override
+    public List<TaskDto> findAllWhereOrganizationId(String organizationId) {
+        List<TaskEntity> taskEntities = taskRepository.findAllWhereOrganizationId(organizationId);
+
+        if (taskEntities == null) {
+            return Collections.emptyList();
+        }
+
+        List<TaskDto> returnedValue = new ArrayList<>();
+        Type listType = new TypeToken<List<TaskDto>>() {
+        }.getType();
+        ModelMapper mapper = new ModelMapper();
+        returnedValue = mapper.map(taskEntities, listType);
 
         return returnedValue;
     }

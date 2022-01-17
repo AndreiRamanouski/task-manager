@@ -8,9 +8,13 @@ import by.htp.ramanouski.taskmanager.controller.utils.ControllerUtils;
 import by.htp.ramanouski.taskmanager.ui.model.request.TaskDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.response.task.TaskRestResponse;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.modelmapper.internal.bytebuddy.description.method.MethodDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,8 +44,21 @@ public class TaskController {
         return returnedValue;
     }
 
-    @GetMapping("organizations/{organizationId}/tasks")
-    public TaskRestResponse createTask(@PathVariable(name = "organizationId") String organizationId) {
+    @GetMapping("/organizations/{organizationId}/tasks")
+    public List<TaskRestResponse> retrieveAllTasks(@PathVariable(name = "organizationId") String organizationId) {
+        List<TaskDto> tasksDto = taskService.findAllWhereOrganizationId(organizationId);
+
+        List<TaskRestResponse> returnedValue = new ArrayList<>();
+        Type listType = new TypeToken<List<TaskRestResponse>>(){}.getType();
+        ModelMapper mapper = new ModelMapper();
+        returnedValue = mapper.map(tasksDto, listType);
+
+        return returnedValue;
+    }
+
+    @GetMapping("/organizations/{organizationId}/users/{userId}/tasks")
+    public TaskRestResponse createTask(@PathVariable(name = "organizationId") String organizationId,
+                                       @PathVariable(name = "userId") String userId) {
         OrganizationDto organizationDto = organizationService.findByOrganizationId(organizationId);
         TaskRestResponse returnedValue = TaskRestResponse.builder()
                 .allUsersInTheOrganization(controllerUtils.getAllUsersIdInOrganization(organizationDto))
