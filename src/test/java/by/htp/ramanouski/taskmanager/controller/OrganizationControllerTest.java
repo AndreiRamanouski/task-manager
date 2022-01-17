@@ -1,9 +1,12 @@
 package by.htp.ramanouski.taskmanager.controller;
 
+import by.htp.ramanouski.taskmanager.service.OrganizationService;
+import by.htp.ramanouski.taskmanager.service.UserService;
 import by.htp.ramanouski.taskmanager.service.exception.ServiceException;
 import by.htp.ramanouski.taskmanager.ui.model.request.AddressDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.OrganizationDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserDetailsRequestModel;
+import by.htp.ramanouski.taskmanager.ui.model.request.UserWithNoOrganizationRequest;
 import by.htp.ramanouski.taskmanager.ui.model.response.organization.OrganizationRestResponse;
 import by.htp.ramanouski.taskmanager.ui.model.response.organization.OrganizationUserREST;
 import by.htp.ramanouski.taskmanager.ui.model.response.user.UserRestResponse;
@@ -14,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,7 +40,7 @@ class OrganizationControllerTest {
         UserDetailsRequestModel userAndOrganizationToSave = createUserDetailsRequestModel();
         UserRestResponse userAndOrganization = organizationController.createUserAndOrganization(userAndOrganizationToSave);
         assertNotNull(userAndOrganization);
-        assertEquals(userAndOrganizationToSave.getEmail(),userAndOrganization.getEmail());
+        assertEquals(userAndOrganizationToSave.getEmail(), userAndOrganization.getEmail());
 
     }
 
@@ -56,13 +58,13 @@ class OrganizationControllerTest {
 
     @Test
     void getOrganization_ThrowsServiceException() {
-        assertThrows(ServiceException.class, () ->{
+        assertThrows(ServiceException.class, () -> {
             organizationController.getOrganization("123");
         });
     }
 
 
-    private UserDetailsRequestModel createUserDetailsRequestModel(){
+    private UserDetailsRequestModel createUserDetailsRequestModel() {
         return UserDetailsRequestModel.builder()
                 .userName("Ivan")
                 .lastName("Ivanov")

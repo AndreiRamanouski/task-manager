@@ -88,6 +88,23 @@ class TaskControllerTest {
 
     }
 
+    @Test
+    void retrieveAllTasks(){
+        UserDto userDto = saveUserAndOrganizationInDatabase();
+        createAndSaveTaskToDatabase(userDto.getUserId());
+        createAndSaveTaskToDatabase(userDto.getUserId());
+        String organizationId = userDto.getOrganization().getOrganizationId();
+        List<TaskRestResponse> taskRestResponses = taskController.retrieveAllTasks(organizationId);
+
+        assertThat(taskRestResponses,hasSize(2));
+    }
+    @Test
+    void retrieveAllTasks_ReturnsEmptyList(){
+        String organizationId = "Random String";
+        List<TaskRestResponse> taskRestResponses = taskController.retrieveAllTasks(organizationId);
+        assertThat(taskRestResponses,hasSize(0));
+    }
+
     private TaskRestResponse createAndSaveTaskToDatabase(String userId) {
         TaskDetailsRequestModel taskDetailsRequestModel = TaskDetailsRequestModel.builder()
                 .targetDate(LocalDate.now())
