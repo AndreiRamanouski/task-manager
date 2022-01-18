@@ -24,12 +24,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/organizations")
+                .antMatchers(HttpMethod.POST, SecurityConstants.SING_UP_URL)
                 .permitAll()
-                .antMatchers(HttpMethod.POST, "/users/{organizationId}/organizations/{organizationId}")
+                .antMatchers(HttpMethod.POST, SecurityConstants.CREATE_USER_URL)
                 .hasRole("ADMIN")
                 .anyRequest().authenticated()
-                .and().addFilter(new AuthenticationFilter(authenticationManager(), userService))
+                .and().addFilter(new AuthenticationFilter(authenticationManager(),userService))
+                .addFilter(new AuthorizationFilter(authenticationManager(),userService))
                 .logout();
     }
 

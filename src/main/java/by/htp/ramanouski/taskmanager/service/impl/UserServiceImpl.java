@@ -99,9 +99,17 @@ public class UserServiceImpl implements UserService {
         UserEntity userByEmail = userRepository.findUserByEmail(email);
 
         if(userByEmail == null){
-            throw new UsernameNotFoundException("No user with email: " + email);
+            throw new UsernameNotFoundException("No user with this email");
         }
-
         return new User(userByEmail.getEmail(), userByEmail.getEncryptedPassword(), userByEmail.getRoles());
+    }
+
+    @Override
+    public UserEntity findUserByEmail(String email) {
+        UserEntity userByEmail = userRepository.findUserByEmail(email);
+        if(userByEmail == null){
+            throw new ServiceException("No user with this email");
+        }
+        return userByEmail;
     }
 }
