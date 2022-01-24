@@ -134,6 +134,22 @@ class UserServiceImplTest {
         });
     }
 
+    @Test
+    void findUserByEmail() {
+        when(userRepository.findUserByEmail(anyString())).thenReturn(userEntity);
+        UserEntity user = userServiceImpl.findUserByEmail("mock@mail.ru");
+        assertNotNull(user);
+        assertEquals("mock@mail.ru", user.getEmail());
+    }
+
+    @Test
+    void findUserByEmail_ThrowsServiceException() {
+        when(userRepository.findUserByEmail(anyString())).thenReturn(null);
+        assertThrows(ServiceException.class, ()->{
+            userServiceImpl.findUserByEmail("mock@mail.ru");
+        });
+    }
+
     private UserEntity createMockUserEntity() {
         return UserEntity.builder()
                 .userName("Mock").lastName("MockLast")
