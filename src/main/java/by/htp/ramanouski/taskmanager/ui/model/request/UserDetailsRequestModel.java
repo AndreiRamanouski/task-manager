@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDetailsRequestModel {
-    private Long id;
     private String userId;
     private String userName;
     private String lastName;

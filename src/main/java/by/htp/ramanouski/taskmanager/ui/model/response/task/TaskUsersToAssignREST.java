@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskUsersToAssignREST {
+    private Long id;
     private String userId;
     private String email;
     private String userName;

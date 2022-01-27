@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users") // http:///localhost:8080/users
 public class UserController {
 
