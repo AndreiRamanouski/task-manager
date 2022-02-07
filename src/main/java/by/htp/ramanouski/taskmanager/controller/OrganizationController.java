@@ -28,6 +28,8 @@ public class OrganizationController {
         this.userService = userService;
     }
 
+
+
     @PostMapping
     public UserRestResponse createUserAndOrganization(@RequestBody UserDetailsRequestModel userDetails) {
 

@@ -41,7 +41,6 @@ class OrganizationControllerTest {
         UserRestResponse userAndOrganization = organizationController.createUserAndOrganization(userAndOrganizationToSave);
         assertNotNull(userAndOrganization);
         assertEquals(userAndOrganizationToSave.getEmail(), userAndOrganization.getEmail());
-
     }
 
     @Test

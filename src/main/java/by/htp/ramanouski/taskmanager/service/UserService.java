@@ -8,5 +8,5 @@ public interface UserService extends UserDetailsService {
     UserDto createNewUser(UserDto userDto);
     UserDto getUserByUserId(String userId);
     UserDto createNewAdminUser(UserDto userDto);
-    UserEntity findUserByEmail(String email);
+    UserDto findUserByEmail(String email);
 }

@@ -105,11 +105,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity findUserByEmail(String email) {
+    public UserDto findUserByEmail(String email) {
         UserEntity userByEmail = userRepository.findUserByEmail(email);
         if(userByEmail == null){
             throw new ServiceException("No user with this email");
         }
-        return userByEmail;
+        ModelMapper mapper = new ModelMapper();
+        UserDto returnedValue = mapper.map(userByEmail,UserDto.class);
+        return returnedValue;
     }
 }

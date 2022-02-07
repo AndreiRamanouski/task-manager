@@ -137,7 +137,7 @@ class UserServiceImplTest {
     @Test
     void findUserByEmail() {
         when(userRepository.findUserByEmail(anyString())).thenReturn(userEntity);
-        UserEntity user = userServiceImpl.findUserByEmail("mock@mail.ru");
+        UserDto user = userServiceImpl.findUserByEmail("mock@mail.ru");
         assertNotNull(user);
         assertEquals("mock@mail.ru", user.getEmail());
     }
