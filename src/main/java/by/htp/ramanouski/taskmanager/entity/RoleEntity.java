@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class RoleEntity implements GrantedAuthority {
     @Column(nullable = false, length = 20)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Collection<UserEntity> users;
 
     @Override

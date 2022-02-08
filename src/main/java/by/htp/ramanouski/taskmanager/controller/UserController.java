@@ -10,13 +10,17 @@ import by.htp.ramanouski.taskmanager.ui.model.request.AddressDetailsRequestModel
 import by.htp.ramanouski.taskmanager.ui.model.request.OrganizationDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserDetailsRequestModel;
 import by.htp.ramanouski.taskmanager.ui.model.request.UserWithNoOrganizationRequest;
+import by.htp.ramanouski.taskmanager.ui.model.response.UserAuthentication;
 import by.htp.ramanouski.taskmanager.ui.model.response.user.UserRestResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.attribute.UserPrincipal;
 import java.util.Collections;
 
 @RestController
@@ -61,5 +65,17 @@ public class UserController {
         UserRestResponse returnedValue = mapper.map(userDto, UserRestResponse.class);
 
         return returnedValue;
+    }
+
+    @GetMapping("/info")
+    public UserAuthentication getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        System.out.println(currentPrincipalName);
+        UserDto userDto = userService.findUserByEmail(currentPrincipalName);
+        return UserAuthentication.builder()
+                .userID(userDto.getUserId())
+                .organizationID(userDto.getOrganization().getOrganizationId())
+                .build();
     }
 }
